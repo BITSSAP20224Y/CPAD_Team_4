@@ -1,0 +1,15 @@
+meta {
+  name: getpatientprofile
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:3000/api/users/patient/profile
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50Ijp7ImlkIjoiNjgwN2VhNWMxZTFjZDQ2OWJmMzg0NmFiIiwibmFtZSI6IkpvaG4iLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJhZ2UiOjMwLCJnZW5kZXIiOiJNYWxlIiwicGhvbmUiOiIxMjM0NTY3ODkwIiwiYWRkcmVzcyI6IjEyMyBTdHJlZXQifSwiaWF0IjoxNzQ3NDE3ODA1LCJleHAiOjE3NDc0MjE0MDV9.gEJB3-5Q_2BMiDIu7gjVXlj71jpkPVucclFes8o_PPs
+}

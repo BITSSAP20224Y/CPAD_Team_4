@@ -1,0 +1,8 @@
+FROM node:slim
+
+WORKDIR /usr/src/app_doctor
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3002
+CMD ["node", "app.js"]

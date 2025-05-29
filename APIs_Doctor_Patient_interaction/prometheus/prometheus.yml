@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'api_gateway'
+    static_configs:
+      - targets: ['api_gateway:3000']
+
+  - job_name: 'user_ms'
+    static_configs:
+      - targets: ['user_ms:3001']
+
+  - job_name: 'doctor_ms'
+    static_configs:
+      - targets: ['doctor_ms:3002']
+
+  - job_name: 'backend'
+    static_configs:
+      - targets: ['backend:4500']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']

@@ -1,0 +1,23 @@
+meta {
+  name: RegisterUser
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/auth/userauth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "washimtest2",
+    "email": "washim2@abc2.com",
+    "password": "washim2",
+    "age": 44,
+    "gender": "Male",
+    "phone": "123455678",
+    "address": "somewhere"
+  }
+}

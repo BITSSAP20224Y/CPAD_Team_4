@@ -1,0 +1,31 @@
+# Node modules and logs
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Local development files
+.vscode
+*.local
+
+# MacOS system files
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Git files
+.git
+.gitignore
+
+# Docker files
+.dockerignore
+Dockerfile
+
+# Build artifacts
+dist
+build
+coverage

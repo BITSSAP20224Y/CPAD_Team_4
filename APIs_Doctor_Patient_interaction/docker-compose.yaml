@@ -1,0 +1,107 @@
+
+services:
+  api_gateway:
+    build:
+      context: ./API_GATEWAY
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - USER_MS=http://user_ms:3001
+      - DOCTOR_MS=http://doctor_ms:3002
+      - APPOINTMENT_MS=http://backend:4500
+      - PORT=3000
+      - JWT=thekingslayer
+    depends_on:
+      - user_ms
+      - doctor_ms
+      - backend
+    networks:
+      - hospital
+
+  user_ms:
+    build:
+      context: ./USER_MS
+      dockerfile: dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=<<URL>>
+      - backend_ms=http://backend:4500/
+      - JWT=thekingslayer
+    depends_on:
+      - backend
+    networks:
+      - hospital
+
+  doctor_ms:
+    build:
+      context: ./DOCTOR_MS
+      dockerfile: dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGO_URI=<<URL>>
+      - PORT=3002
+    depends_on:
+      - backend
+    networks:
+      - hospital
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: dockerfile
+    ports:
+      - "4500:4500"
+    environment:
+      - PORT=4500
+      - Appointment_URI=<<URL>>
+      - Doctor_URI=<<URL>>
+      - User_URI=<<URL>>
+    networks:
+      - hospital
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/data/:/prometheus
+    networks:
+      - hospital
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3003:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - hospital
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - hospital
+
+networks:
+  hospital:
+    driver: bridge
